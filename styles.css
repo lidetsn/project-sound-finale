@@ -1,0 +1,12 @@
+ body{
+    background-image: url("images/back.gif")
+    
+}  
+/* body{
+
+    background-image: url("images/HOROSCOPE.gif")  
+} */
+#login-modal,#creat-account-modal,#modalRegular{
+    margin-top: 125px;
+    
+}

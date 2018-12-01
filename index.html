@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PROJECT AWESOME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <!-- <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmYHEQwXA3bucxiXU2-23Dx-PnAOAO6NA&callback&callback=initMap">
+    </script> -->
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyDmYHEQwXA3bucxiXU2-23Dx-PnAOAO6NA"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script> 
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script defer src="js/config.js"></script>
+    <script defer src="js/forms.js"></script>
+    <script defer src="js/script.js"></script>
+    <script defer src="js/session.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/map.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container mt-5  bg-primary" id="outerContainer">
+        <!-- header row -->
+        <div class="row">
+            <div class="col-md-12 text-center text-white">
+                <h3 class="pt-1">PROJECT SOUND</h3>
+            </div>
+        </div>
+        <!-- login row -->
+        <div class="row bg-light">
+            <div class="col-md-12 text-sm-right">
+                <div class="container bg-light" id="login-container">
+                    <button type="button" class="btn btn-primary my-1 px-3" data-toggle="modal" data-target="#login-modal">
+                        login
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <!-- sign out row -->
+        <div class="row bg-light greating-container">
+            <div class="col-md-12">
+                <h3 id="userName" class="text-success greating-container mb-4"></h3>
+            </div>
+
+        </div>
+        <!-- bar buttons row -->
+        <div class="row bg-light">
+            <div class="col-md-12 text-sm-left">
+                <div class="container bg-light">
+                    <!-- ------------------------ -->
+                    <!-- Example drop down menu -->
+                    <nav class="navbar navbar-light bg-light">
+                        <div class="btn-group  dropright greating-container">
+                            <button type="button" class="btn btn-lg btn-primary">Menu</button>
+                            <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item" href="#" id="getMyfavoriteArtis">My Favorite Artist</button>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#update-account-modal">update
+                                    profile </a>
+                                <button class="dropdown-item" href="#" id="home">Home</button>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" id="logOut">SignOut</a>
+                            </div>
+                        </div>
+                       
+                        <!-- ...................   -->
+                        <form class="form-inline" action="#">
+                            <input class="form-control mr-sm-2" type="search" id="artistName" placeholder="Artist Name"
+                                aria-label="Search">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="search-Artist">Search</button>
+                        </form>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+        <div class="row py-1">
+            <div class="col-md-12"></div>
+        </div>
+
+        <!-- main body row -->
+        <div class="row ">
+            <div class="col-md-4 border text-white bg-light" id="dataDrop1">
+
+            </div>
+
+
+            <div class="col-md-8 border bg-light text-muted" id="locations">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modals -->
+    <!-- Modal 1 login-->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="loginhead"
+        aria-hidden="true">
+        <div class="modal-dialog" id="login-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="text-center text-muted  mt-md-3 modal-title" id="loginhead">Sign in to project
+                        Awesome </h6>
+                        
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="loginto">
+                    <div class="container bg-primary">
+                        <form action="#">
+                            <div class="form-group row">
+                                <div class="col-sm-1 "></div>
+                                <label for="email" class="col-sm-2 col-form-label text-md-right  mt-md-4 text-white">Email</label>
+                                <div class="col-sm-8 ">
+                                    <input type="email" class="form-control  mt-md-4" id="email" placeholder="Email">
+                                </div>
+                                <div class="col-sm-1 "></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-1 "></div>
+                                <label for="password" class="col-sm-2 col-form-label text-md-right text-white">Password</label>
+                                <div class="col-sm-8 ">
+                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                </div>
+                                <div class="col-sm-1 "></div>
+                            </div>
+
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-12"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="container">
+                        <div class="form-group row">
+                            <div class="col-xsm-3 col-sm-3"></div>
+                            <div class="col-xsm-8 ">
+                                <button type="submit" class="btn btn-outline-primary mr-5  mb-md-2" id="sign-in">Sign In</button>
+
+                                <button type="submit" class="btn btn-outline-primary  mb-md-2" id="create-account"
+                                    data-toggle="modal" data-target="#creat-account-modal">Create Account</button>
+                            </div>
+                            <div class="col-xsm-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 creat account-->
+    <div class="modal fade" id="creat-account-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" id="creat-account-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="text-center text-muted  mt-md-3 modal-title" id="exampleModalLabel">Signup to project
+                        Awesome </h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="creatAcc">
+                    <div class="container bg-primary">
+                        <form action="#">
+                            <div class="form-group row">
+
+                                <label for="entry-displayname" class="col-sm-4 col-form-label text-md-right mt-md-5 text-white">Display
+                                    Name</label>
+                                <div class="col-sm-7 ">
+                                    <input type="text" class="form-control mt-md-5" id="entry-displayname" placeholder="Display Name">
+                                </div>
+                                <div class="col-sm-1 "></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <label for="entry-email" class="col-sm-2 col-form-label text-md-right text-white">Email</label>
+                                <div class="col-sm-7 ">
+                                    <input type="email" class="form-control " id="entry-email" placeholder="Email">
+                                </div>
+                                <div class="col-sm-1 "></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2 "></div>
+                                <label for="entry-password" class="col-sm-2 col-form-label  text-md-right text-white">Password</label>
+                                <div class="col-sm-7">
+                                    <input type="password" class="form-control mb-md-3" id="entry-password" placeholder="Password">
+                                </div>
+                                <div class="col-sm-1 "></div>
+                            </div>
+
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-12"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="container">
+                        <div class="form-group row">
+                            <div class="col-sm-4 "></div>
+                            <div class="col-sm-6 ">
+                                <button type="submit" class="btn btn-outline-primary btn-lg px-5 mb-3" id="entry-submit">Create</button>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 update account-->
+    <div class="modal fade mt-md-5" id="update-account-modal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" id="creat-account-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="text-center text-muted  mt-md-3 modal-title" id="exampleModalLabel">Update profile </h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container bg-primary">
+                        <!-- update form fields -->
+                        <form class="needs-validation" novalidate>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationTooltip01" class="text-white">First name</label>
+                                    <input type="text" class="form-control" id="validationTooltip01" placeholder="First name"
+                                        required>
+                                    <div class="valid-tooltip">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationTooltip02" class="text-white">Last name</label>
+                                    <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name"
+                                        required>
+                                    <div class="valid-tooltip">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationTooltipUsername" class="text-white">Date Of Birth</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+
+                                        </div>
+                                        <input type="date" class="form-control" id="validationTooltipUsername"
+                                            placeholder="Username" aria-describedby="validationTooltipUsernamePrepend"
+                                            required>
+                                        <div class="invalid-tooltip">
+                                            Please choose a unique and valid username.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationTooltip03" class="text-white">City</label>
+                                    <input type="text" class="form-control" id="validationTooltip03" placeholder="City"
+                                        required>
+                                    <div class="invalid-tooltip">
+                                        Please provide a valid city.
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationTooltip04" class="text-white">State</label>
+                                    <input type="text" class="form-control" id="validationTooltip04" placeholder="State"
+                                        required>
+                                    <div class="invalid-tooltip">
+                                        Please provide a valid state.
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationTooltip05" class="text-white">Zip</label>
+                                    <input type="text" class="form-control" id="validationTooltip05" placeholder="Zip"
+                                        required>
+                                    <div class="invalid-tooltip">
+                                        Please provide a valid zip.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="container">
+                        <div class="form-group row">
+                            <div class="col-sm-4 "></div>
+                            <div class="col-sm-6 ">
+                                <button type="submit" class="btn btn-outline-primary btn-lg px-5 mb-3" id="entry-update">update</button>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- --------------modal 5--map modal------------------------- -->
+
+
+    <div class="modal fade mt-5" id="modalRegular" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Body-->
+                <div class="modal-body mb-0 p-0">
+
+                    <!--Google map-->
+                    <div id="map-container-9" class="z-depth-1-half" style="height: 400px"></div>
+
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+
+                    <button type="button" class="btn btn-primary btn-md">Save location <i class="fa fa-map-marker ml-1"></i></button>
+                    <button type="button" class="btn btn-outline-primary btn-md" data-dismiss="modal">Close <i class="fa fa-times ml-1"></i></button>
+
+                </div>
+
+            </div>
+            <!--/.Content-->
+
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
