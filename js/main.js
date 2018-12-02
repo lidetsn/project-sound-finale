@@ -144,9 +144,12 @@ function retriveMyFavoritArtist(){
                  }
                  $("#dataDrop1").prepend(favdiv)
                 // $("#dataDrop1").append(favdiv)
-                                    if(favArry==null){
-                                    console.log("you have no favorite artist yet")
-                                      }
+                if(favArry.length===0){
+                    var nofev=$("<div>").addClass("text-info")
+                    nofev.append("<h4>You Have No Favorite Artist yet</h4>")
+                        $("#dataDrop1").append(nofev)    
+                    console.log("you have no favorite artist yet")
+                      }
                                     else{
                                         console.log(favArry)
                                     }

@@ -96,6 +96,7 @@ var Session = (function() {
            console.log("data base created")
         })
  //..............................................................
+                    $("#favoritArtist").removeAttr("disabled");
                     $(".greating-container").show(); 
                     $('#creat-account-modal').modal('hide')
                     $("#login-container").hide();
