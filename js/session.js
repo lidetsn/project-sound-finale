@@ -9,8 +9,7 @@ var Session = (function() {
         if (user) {
             console.log("I am now logged in as ---"+ user.displayName);
             loggedIn = true;         
-            document.querySelector("#login-form").style.display = "none";
-            document.querySelector("#logOut").style.display = "block";         
+               
            
         } else { //signout
             if (loggedIn) {
