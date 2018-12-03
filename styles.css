@@ -10,3 +10,28 @@
     margin-top: 125px;
     
 }
+.smallDevice{
+    font-size: 6px;
+    width:50px
+    
+}
+@media screen and (max-width:640px){
+    #locations,#dataDrop1{
+        background-image: url("images/back.gif")
+    }
+#artistName {
+    width: 150px;
+
+}
+#favoritArtist{
+    font-size: 10px
+}
+#menuBtn,#search-Artist{
+    
+font-size: 10px
+}
+#userName{
+    font-size: 15px
+}
+
+}

@@ -15,8 +15,8 @@ var Main = (function() {
                             "Porter Robinson", "Seven Lions", "Diplo", "Borgore"];
      // var initialArtist = initialArtists[Math.floor(Math.random() * initialArtists.length)];
     $(document).on("click","#search-Artist ", getArtistName)           
-    var seeUpComingEvents=$("<button>").addClass("upComingEvent mt-2 mb-3 mr-2 btn  btn-primary").text("click to see other Events")
-    var addToFavorit=$("<button>").addClass("favorit mt-2 mb-3 btn  btn-primary").attr("id","favoritArtist").attr("disabled","true").text("Add To Favorite")   
+    var seeUpComingEvents=$("<button>").addClass("upComingEvent mt-2 mb-3 mr-5 btn  btn-primary").text("Next")
+    var addToFavorit=$("<button>").addClass("favorit btn  ml-5 btn-primary mb-1").attr("id","favoritArtist").attr("disabled","true").text("Add To Favorite")   
 //------------------------------
 
 function getArtistName(){
@@ -206,11 +206,11 @@ function searchBandsInTown(artist) {
       console.log(response);
             
          
-             artistName = $("<h3>").text(response.name);
+             artistName = $("<h5>").text(response.name);
            var artistURL = $("<a>").attr("href", response.url).append(artistName).attr("target", "_blank");
            var artistImage = $("<img>").attr("src", response.thumb_url);
            var trackerCount = $("<p>").addClass("text-muted").text(response.tracker_count + " fans tracking");
-           var upcomingEvents = $("<p>").addClass("text-muted").text(response.upcoming_event_count + " upcoming events");
+           var upcomingEvents = $("<span>").addClass("text-muted").text(response.upcoming_event_count + " upcoming events");
            var goToArtist = $("<a>").attr("href", response.url).attr("target", "_blank");
             // goToArtist.append(`<i class="far fa-calendar-alt"></i>`);
            var facebookPage = $("<a>").attr("href", response.facebook_page_url).attr("target", "_blank");
@@ -222,7 +222,7 @@ function searchBandsInTown(artist) {
            // Empty the contents of the artist-div, append the new artist content
            //$("#dataDrop1").empty();
           // $("#dataDrop2").empty();
-           $("#dataDrop1").append(seeUpComingEvents,addToFavorit,artistURL,upcomingEvents,artistImage,trackerCount,seeOnYouTubeBtn);
+           $("#dataDrop1").append(seeUpComingEvents,artistURL,upcomingEvents,addToFavorit,artistImage,trackerCount,seeOnYouTubeBtn);
           // $("#dataDrop2").append(facebookPage);
            if(response.facebook_page_url !== "")
            {
@@ -282,6 +282,7 @@ function searchBandsInTown(artist) {
                 $("#locations").append(mapBtn);
                       
                 }; // loop closing
+                $("#locations").prepend("<h5>upcoming events of "+" "+artist+"</h5><hr>")
 
                 $(document).on("click",".map-btn",function() { 
                      const lat = $(this).attr('data-lat')
@@ -354,8 +355,8 @@ function getOutput(item) {
             
             // Build output string
                var frame=$("<iframe>");
-               frame.attr("width","560")
-               frame.attr("height","315")
+            //    frame.attr("width","560")
+            //    frame.attr("height","315")
                frame.attr("src","https://www.youtube.com/embed/"+videoID)
                $('#locations').append(frame);         
         }
@@ -377,6 +378,7 @@ function getOutput(item) {
                 name=initialArtists[0];
                // search(initialArtist);                              
         },
+        
         onLogin:function(){
                 $(".greating-container").show();     
                 user=  firebase.auth().currentUser.displayName        

@@ -35,71 +35,72 @@
 </head>
 
 <body>
-    <div class="container mt-5  bg-primary" id="outerContainer">
+    <div class="container mt-md-5  py-3 bg-primary" id="outerContainer">
         <!-- header row -->
-        <div class="row">
+        <div class="row mx-1">
             <div class="col-md-12 text-center text-white">
                 <h3 class="pt-1">PROJECT SOUND</h3>
             </div>
         </div>
-        <!-- login row -->
-        <div class="row bg-light">
-            <div class="col-md-12 text-sm-right">
-                <div class="container bg-light" id="login-container">
-                    <button type="button" class="btn btn-primary my-1 px-3" data-toggle="modal" data-target="#login-modal">
-                        login
-                    </button>
-                </div>
-            </div>
+       
+        <div class="row bg-light greating-container mx-1">
+           
+            <div class="col-xs-3">
 
-        </div>
-        <!-- sign out row -->
-        <div class="row bg-light greating-container">
-            <div class="col-md-12">
-                <h3 id="userName" class="text-success greating-container mb-4"></h3>
+                   
             </div>
+            <div class="col-xs-9">
+                    <h3 id="userName" class="text-muted greating-container mb-4"></h3>
+                </div>
 
         </div>
         <!-- bar buttons row -->
-        <div class="row bg-light">
-            <div class="col-md-12 text-sm-left">
-                <div class="container bg-light">
-                    <!-- ------------------------ -->
-                    <!-- Example drop down menu -->
-                    <nav class="navbar navbar-light bg-light">
-                        <div class="btn-group  dropright greating-container">
-                            <button type="button" class="btn btn-lg btn-primary">Menu</button>
-                            <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
-                                <button class="dropdown-item" href="#" id="getMyfavoriteArtis">My Favorite Artist</button>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#update-account-modal">update
-                                    profile </a>
-                                <button class="dropdown-item" href="#" id="home">Home</button>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" id="logOut">SignOut</a>
-                            </div>
-                        </div>
+        <div class="row bg-light mx-1 justify-content-end">
+            <div class="col-xs-2 mt-2 mr-md-5 mr-sm-2"> 
+                <!-- <div class="container bg-light"> -->
+                        <!-- <nav class="navbar navbar-light bg-light"> -->
+                                <div class="btn-group  dropright greating-container" id="menu">
+                                    <button type="button" class="btn  btn-primary" id="menuBtn">Menu</button>
+                                    <button type="button" class="btn  btn-primary dropdown-toggle dropdown-toggle-split"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" href="#" id="getMyfavoriteArtis">My Favorite Artist</button>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#update-account-modal">update
+                                            profile </a>
+                                        <button class="dropdown-item" href="#" id="home">Home</button>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logOut">SignOut</a>
+                                    </div>
+                                </div> 
+                            <!-- </nav> -->
+                    
+                      </div> 
                        
-                        <!-- ...................   -->
-                        <form class="form-inline" action="#">
-                            <input class="form-control mr-sm-2" type="search" id="artistName" placeholder="Artist Name"
-                                aria-label="Search">
-                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="search-Artist">Search</button>
-                        </form>
-                    </nav>
+                                 <div class="col-xs-6 mt-2 mb-1">
+                            <input class="form-control mr-1" type="search" id="artistName" placeholder="Artist Name"
+                                aria-label="Search"></div>
+                                <div class="col-xs-2 mt-2 mb-1">                
+                         <button class="btn btn-outline-primary mr-4 text-xs-right mt-xs-1 py-2" type="submit" id="search-Artist">Search</button>
+                        </div> 
 
-                </div>
-            </div>
+                        
+                                <div class="col-xs-2 mt-2 mb-1" id="login-container">
+                                    <!-- <div class="container bg-light" id="login-container"> -->
+                                        <button type="button" class="btn btn-primary text-right mt-xs-1" data-toggle="modal" data-target="#login-modal">
+                                            login
+                                        </button>
+                                    <!-- </div> -->
+                                </div>
+                
         </div>
-        <div class="row py-1">
+        <div class="row py-1 mx-1">
             <div class="col-md-12"></div>
         </div>
 
         <!-- main body row -->
-        <div class="row ">
+        <div class="row mx-1">
             <div class="col-md-4 border text-white bg-light" id="dataDrop1">
 
             </div>
@@ -109,6 +110,7 @@
 
             </div>
         </div>
+        <div class="row mb-3 mx-1"><div class="col-md-12"></div></div>
     </div>
 
     <!-- modals -->
