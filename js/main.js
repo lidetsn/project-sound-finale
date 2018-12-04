@@ -23,10 +23,15 @@ var Main = (function() {
 function getArtistName(){
         name=$("#artistName").val()
         if(name!=""){
+            if(screenSize>768){
         searchBandsInTown(name)
         searchEvent(name)
+            }
+            else{
+            searchBandsInTown(name)
+            }
         $("#artistName").val("");
-        $("#location").html("");
+        $("#location").empty();
         $("#dataDrop1").empty();
       }
 }
@@ -265,7 +270,7 @@ function searchBandsInTown(artist) {
           // $("#dataDrop2").empty();
            $("#dataDrop1").append(seeUpComingEvents,artistURL,upcomingEvents,addToFavorit,artistImage,trackerCount,seeOnYouTubeBtn);
           // $("#dataDrop2").append(facebookPage);
-          if(screenSize<768){
+          if(screenSize<768 && response.upcoming_event_count>0){
             $("#dataDrop1").append(seeUpComingEvents,artistURL,upcomingEvents,addToFavorit,artistImage,trackerCount,seeOnYouTubeBtn,seeListOfEvent);
 
 
@@ -300,10 +305,10 @@ function searchBandsInTown(artist) {
         //     var venueCountry;
             var mapLink;
             var eventDateFormat;
-            if(screenSize<768){
+            if(screenSize<768 && response.length>0){
             $("#locations").empty();
             $("#dataDrop1").empty()
-            makeBackButton();
+            makeBackButton(artist);
             $("#dataDrop1").append($("<h5>").addClass("text-info mb-2").text("upcoming events of "+" "+artist))
             }
             else{
@@ -361,8 +366,8 @@ function searchBandsInTown(artist) {
                     //function to show a specific map for each button 
                    
                     // what happens if the artist has no upcoming events
-                    if (response.length === 0) {
-                   // $("#locations").empty();
+                    if (response.length === 0 && screenSize>768) {
+                    $("#locations").empty();
                     $("#locations").html(`<h5 id="locationsTitle">This band has no upcoming events but you can check out their amazing videos below</h5>`);
                 };
         
@@ -385,12 +390,13 @@ function searchBandsInTown(artist) {
         
         };
 
-        function makeBackButton(){
+        function makeBackButton(artist){
             var backBtn=$("<button>").text("Back").attr("id","backtoPrev").addClass("my-2 btn btn-primary")
             $('#dataDrop1').append(backBtn);
             $(document).on("click","#backtoPrev",function(){
-                clickCounter--;
-                showNext()
+                // clickCounter--;
+                // showNext()
+                searchBandsInTown(artist)
              } )
             }
         
@@ -401,7 +407,7 @@ function searchBandsInTown(artist) {
             if(screenSize<768){
                 $("#locations").empty();
                 $("#dataDrop1").empty()
-                makeBackButton();
+                makeBackButton(artist);
             }
                 else{
                     $("#locations").empty(); 
