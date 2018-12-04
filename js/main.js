@@ -54,31 +54,37 @@ function showNext(){
     $("#dataDrop1").empty();
     $("#dataDrop2").empty();       
     clickCounter++
+   
    if(clickCounter<initialArtists.length){
+    name= initialArtists[clickCounter]
        if(screenSize>768){
-          searchBandsInTown(initialArtists[clickCounter]) 
-          searchEvent(initialArtists[clickCounter]);  
-          name= initialArtists[clickCounter];         
+    
+          searchBandsInTown(name) 
+          searchEvent(name);  
+         // name= initialArtists[clickCounter];         
    }
    else{
-    searchBandsInTown(initialArtists[clickCounter]) 
-    //searchEvent(initialArtists[clickCounter]);  
-    name= initialArtists[clickCounter];   
+   // name= initialArtists[clickCounter];   
 
+    searchBandsInTown(name) 
+    //searchEvent(initialArtists[clickCounter]);  
+    
    }
 }
    else{
        clickCounter=0;
-       
+       name= initialArtists[clickCounter]; 
        if(screenSize>768){
-        searchBandsInTown(initialArtists[clickCounter]) 
-        searchEvent(initialArtists[clickCounter]);  
-        name= initialArtists[clickCounter];         
+          
+        searchBandsInTown(name) 
+        searchEvent(name);  
+                
  }
  else{
-  searchBandsInTown(initialArtists[clickCounter]) 
+   // name= initialArtists[clickCounter];  
+      searchBandsInTown(name) 
   //searchEvent(initialArtists[clickCounter]);  
-  name= initialArtists[clickCounter];   
+  
 
  } 
    }
@@ -308,6 +314,7 @@ function searchBandsInTown(artist) {
             if(screenSize<768 && response.length>0){
             $("#locations").empty();
             $("#dataDrop1").empty()
+            
             makeBackButton(artist);
             $("#dataDrop1").append($("<h5>").addClass("text-info mb-2").text("upcoming events of "+" "+artist))
             }
@@ -396,6 +403,7 @@ function searchBandsInTown(artist) {
             $(document).on("click","#backtoPrev",function(){
                 // clickCounter--;
                 // showNext()
+                name=artist;
                 searchBandsInTown(artist)
              } )
             }
@@ -407,6 +415,7 @@ function searchBandsInTown(artist) {
             if(screenSize<768){
                 $("#locations").empty();
                 $("#dataDrop1").empty()
+                name=artist;
                 makeBackButton(artist);
             }
                 else{
