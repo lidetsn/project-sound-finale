@@ -26,12 +26,16 @@
 #favoritArtist{
     font-size: 10px
 }
-#menuBtn,#search-Artist{
+#menuBtn{
     
 font-size: 10px
 }
 #userName{
     font-size: 15px
 }
+#search-Artist{
+    
+    font-size: 14px
+    }
 
 }

@@ -7,6 +7,7 @@ var Main = (function() {
     var name;
     var seeOnYouTubeBtn
     var ref
+    var screenSize;
 
     var initialArtists = ["Zeds Dead", "Said The Sky", "Louis The Child","Minus the Bear", "Big Wild",
                              "Gucci Mane", "Delta Heavy", "Pushloop", 
@@ -49,15 +50,32 @@ function showNext(){
     $("#dataDrop2").empty();       
     clickCounter++
    if(clickCounter<initialArtists.length){
+       if(screenSize>768){
           searchBandsInTown(initialArtists[clickCounter]) 
           searchEvent(initialArtists[clickCounter]);  
           name= initialArtists[clickCounter];         
    }
    else{
+    searchBandsInTown(initialArtists[clickCounter]) 
+    //searchEvent(initialArtists[clickCounter]);  
+    name= initialArtists[clickCounter];   
+
+   }
+}
+   else{
        clickCounter=0;
-       searchBandsInTown(initialArtists[clickCounter]) 
-       searchEvent(initialArtists[clickCounter]);
-       name= initialArtists[clickCounter];  
+       
+       if(screenSize>768){
+        searchBandsInTown(initialArtists[clickCounter]) 
+        searchEvent(initialArtists[clickCounter]);  
+        name= initialArtists[clickCounter];         
+ }
+ else{
+  searchBandsInTown(initialArtists[clickCounter]) 
+  //searchEvent(initialArtists[clickCounter]);  
+  name= initialArtists[clickCounter];   
+
+ } 
    }
 }
 function removeTooltip(id) {
@@ -115,9 +133,12 @@ function AddToFavoritDataBase(){
 function retriveMyFavoritArtist(){
 
     var favdiv=$("<div>")
+        
     favdiv.addClass("text-muted")
+
     $("#dataDrop1").empty();
     $("#locations").empty();
+    
     console.log("from favorite")
         var favArry=[]
        var user=  firebase.auth().currentUser; 
@@ -134,16 +155,17 @@ function retriveMyFavoritArtist(){
                            var userref=ref.child(key);
           // userfav=userref.child("favorit")
                                favArry= childData.favorit
-                               favArry.shift()
+                               favArry.shift()// remove the default fav from the array 
                                favArry.sort()
-                 favdiv.append("<h4>Favorite Arists</h4><br>")
+                 favdiv.append("<h4>Favorite Artists</h4><br>")
+                // favdiv.append(backBtn)
                  for(var i=0;i<favArry.length;i++){                      
-                    
+                   // favdiv.append(favArry[i])
                     searchFavoriteBandsInTown(favArry[i])
 
                  }
-                 $("#dataDrop1").prepend(favdiv)
-                // $("#dataDrop1").append(favdiv)
+                // $("#dataDrop1").prepend(favdiv)
+                $("#dataDrop1").append(favdiv)
                 if(favArry.length===0){
                     var nofev=$("<div>").addClass("text-info")
                     nofev.append("<h4>You Have No Favorite Artist yet</h4>")
@@ -158,16 +180,20 @@ function retriveMyFavoritArtist(){
               });
              
    });
-   $(document).on("click",".favBtn",function() { 
+   $(document).on("click",".favEventBtn",function() { 
     name = $(this).attr('value')
    
    console.log("hi there from favorite ")
    searchEvent(name)
    
  })
-
-
-
+ $(document).on("click",".favYoutube",function() { 
+    name = $(this).attr('value')
+   
+   console.log("hi there from favorite ")
+   search(name)
+   
+ })
 }
 function searchFavoriteBandsInTown(artist) {
 
@@ -180,14 +206,28 @@ function searchFavoriteBandsInTown(artist) {
 
     }).then(function (response) {
 
-        var favBtn = $("<button>").text(artist);
-        favBtn.addClass("favBtn btn btn-outline-primary my-2");
-        favBtn.attr("value",artist )
-       $("#dataDrop1").append(favBtn).append("<br>")
+        var favDiv = $("<div>");
+        favDiv.addClass("text-info")
+        var seeEvent=$("<button>").text("Artist Event")
+        var seeOnYouTube=$("<button>").text("Load Youtube")
+       // favBtn.addClass("favBtn btn btn-outline-primary my-2");
+        seeEvent.addClass("favEventBtn btn btn-outline-primary my-2");
+        seeOnYouTube.addClass("favYoutube btn btn-outline-primary my-2 mr-2");
+        seeEvent.attr("value",artist )
+        seeOnYouTube.attr("value",artist )
+        favDiv.append("<h6>"+artist+"</h6>")
+       $("#dataDrop1").append(favDiv).append(seeOnYouTube)
+
+       if(response.upcoming_event_count!=0){
+        $("#dataDrop1").append(seeEvent).append("<br>")
+       }
+       else
+       $("#dataDrop1").append("<br>")
    
            var artistImage = $("<img>").attr("src", response.thumb_url);
+           artistImage.addClass("mb-2")
         var upcomingEvents = $("<p>").addClass("text-muted").text(response.upcoming_event_count + " upcoming events");
-        $("#dataDrop1").append(upcomingEvents,artistImage);
+        $("#dataDrop1").append(upcomingEvents,artistImage).append("<hr>");
     })
 }
 
@@ -217,13 +257,19 @@ function searchBandsInTown(artist) {
            //facebookPage.append(`<i class="fa fa-facebook-official" style="font-size:100px"></i>`);
            var facebookText = $("<h4>").text(" Facebook Page ");
            var goToArtist = $("<a>").attr("href", response.url);
-           seeOnYouTubeBtn=$("<button>").addClass("seeOnYouTube mr-2 mb-5 btn btn-outline-primary").attr("id", artist).text("see youtube history")
+           seeOnYouTubeBtn=$("<button>").addClass("seeOnYouTube mr-2 mb-5 btn btn-outline-primary").attr("id", artist).text("see on youtube ")
+           seeListOfEvent=$("<button>").addClass("SeeListOfEvent mr-2 mb-5 btn btn-outline-primary").attr("id", "ListEvent").text("see Events")
           
            // Empty the contents of the artist-div, append the new artist content
-           //$("#dataDrop1").empty();
+           $("#dataDrop1").empty();
           // $("#dataDrop2").empty();
            $("#dataDrop1").append(seeUpComingEvents,artistURL,upcomingEvents,addToFavorit,artistImage,trackerCount,seeOnYouTubeBtn);
           // $("#dataDrop2").append(facebookPage);
+          if(screenSize<768){
+            $("#dataDrop1").append(seeUpComingEvents,artistURL,upcomingEvents,addToFavorit,artistImage,trackerCount,seeOnYouTubeBtn,seeListOfEvent);
+
+
+          }
            if(response.facebook_page_url !== "")
            {
             $("#dataDrop2").append(facebookPage);
@@ -254,9 +300,15 @@ function searchBandsInTown(artist) {
         //     var venueCountry;
             var mapLink;
             var eventDateFormat;
-            
+            if(screenSize<768){
             $("#locations").empty();
-
+            $("#dataDrop1").empty()
+            makeBackButton();
+            $("#dataDrop1").append($("<h5>").addClass("text-info mb-2").text("upcoming events of "+" "+artist))
+            }
+            else{
+                $("#locations").empty(); 
+            }
                 for (var index = 0; index < response.length; index++) {
                 
                 venueName = response[index].venue.name;
@@ -269,9 +321,16 @@ function searchBandsInTown(artist) {
           
                 eventInfo = (`<p><i>${venueCountry} ${venueCity} ${venueName} ${eventDateFormat}</i></p>`);
                  
-                //appending events   
+                //appending events
+                if(screenSize<768)  {
+                    var infoDiv=$("<div>").addClass("text-muted")
+                    
+                    infoDiv.append(eventInfo)
+                    $("#dataDrop1").append(infoDiv);   
+                } 
+                else{
                 $("#locations").append(eventInfo);
-        
+                }
                 // creating map buttons  
                 var mapBtn = $("<button>").text("See it on map");
                 mapBtn.addClass("map-btn btn btn-outline-primary");
@@ -279,11 +338,17 @@ function searchBandsInTown(artist) {
                  mapBtn.attr("data-target","#modalRegular")
                 mapBtn.attr('data-lat', venueLatitude);
                 mapBtn.attr('data-long', venueLongitude);
+                if(screenSize<768){
+                    $("#dataDrop1").append(mapBtn);  
+                }
+                else{
                 $("#locations").append(mapBtn);
-                      
+                }    
                 }; // loop closing
-                $("#locations").prepend("<h5>upcoming events of "+" "+artist+"</h5><hr>")
-
+                
+                if(screenSize>768){
+                 $("#locations").prepend("<h5>upcoming events of "+" "+artist+"</h5><hr>")
+                }
                 $(document).on("click",".map-btn",function() { 
                      const lat = $(this).attr('data-lat')
                     const long = $(this).attr('data-long');
@@ -319,11 +384,29 @@ function searchBandsInTown(artist) {
         
         
         };
+
+        function makeBackButton(){
+            var backBtn=$("<button>").text("Back").attr("id","backtoPrev").addClass("my-2 btn btn-primary")
+            $('#dataDrop1').append(backBtn);
+            $(document).on("click","#backtoPrev",function(){
+                clickCounter--;
+                showNext()
+             } )
+            }
+        
         function search(artist) {
             
             var gapikey = 'AIzaSyCKMpw2nmPnon_gkh4EIXnbiAmrZNw-v4M';
             // clear 
-            $("#locations").html(" ");
+            if(screenSize<768){
+                $("#locations").empty();
+                $("#dataDrop1").empty()
+                makeBackButton();
+            }
+                else{
+                    $("#locations").empty(); 
+                }
+               
             // get form input   
             $.ajax({
                 method: 'GET',
@@ -352,13 +435,19 @@ function getOutput(item) {
             var thumb = item.snippet.thumbnails.default.url;
             var channelTitle = item.snippet.channelTitle;``
             var videoDate = item.snippet.publishedAt;
+           
             
             // Build output string
                var frame=$("<iframe>");
             //    frame.attr("width","560")
             //    frame.attr("height","315")
                frame.attr("src","https://www.youtube.com/embed/"+videoID)
-               $('#locations').append(frame);         
+               if(screenSize<768){
+               $('#dataDrop1').append(frame);     
+               }
+               else{
+                $('#locations').append(frame);  
+               }    
         }
 
     // Exposed functions
@@ -368,15 +457,22 @@ function getOutput(item) {
                 $(".greating-container").hide();                           
                 $(document).on("click", ".upComingEvent",showNext) 
                 $(document).on("click", ".seeOnYouTube", showYouTube)
+                $(document).on("click", ".SeeListOfEvent", showEvent)
                 $(document).on("click", "#favoritArtist",AddToFavoritDataBase) 
                 $(document).on("click","#getMyfavoriteArtis",retriveMyFavoritArtist) 
                 $(document).on("click","#home",showNext)
+               
 
+                screenSize = $(document).width();
                 ref = firebase.database().ref("/users");
                 searchBandsInTown(initialArtists[0]);
+                if(screenSize>768){
                 searchEvent(initialArtists[0]);
+                }
                 name=initialArtists[0];
-               // search(initialArtist);                              
+               // search(initialArtist); 
+              
+                                            
         },
         
         onLogin:function(){
